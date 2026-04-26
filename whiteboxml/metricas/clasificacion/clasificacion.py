@@ -175,3 +175,124 @@ def recall(
     with np.errstate(divide="ignore", invalid="ignore"):
         per_class_recall = np.nan_to_num(tp / (tp + fn))
     return per_class_recall
+def f1_score(
+    y_true: ArrayLike,
+    y_pred: ArrayLike,
+    average: str | None = "binary",
+    pos_label: Any = 1,
+) -> float | np.ndarray:
+    """
+    Cálculo del F1 Score.
+    El F1 Score es la media entre precision y recall.
+
+    F1 = 2 * (precision * recall) / (precision + recall)
+
+    :param y_true: valores reales (ground truth)
+    :param y_pred: valores predichos por el modelo
+    :param average: tipo de promedio en multiclase
+    :param pos_label: clase positiva (solo para binary)
+    :return: valor de F1 o vector por clase
+    :authors: Cecilia Gómez. Grupo 6
+    :date: 24/04/2026
+    """
+
+    # Validamos el parámetro average (lo normaliza y revisa que sea válido)
+    average = _validacion_average(average)
+
+    # Convertimos los inputs a numpy arrays y validamos dimensiones
+    vector_true, vector_pred = _validacion_inputs(y_true, y_pred)
+
+    # Obtenemos las clases únicas presentes en los datos
+    classes = np.unique(vector_true)
+
+    # CASO BINARIO
+
+    if average == "binary":
+
+        # True Positives: predije positivo y era positivo
+        tp = np.sum((vector_pred == pos_label) & (vector_true == pos_label))
+
+        # False Positives: predije positivo pero era negativo
+        fp = np.sum((vector_pred == pos_label) & (vector_true != pos_label))
+
+        # False Negatives: predije negativo pero era positivo
+        fn = np.sum((vector_pred != pos_label) & (vector_true == pos_label))
+
+        # Precision = TP / (TP + FP)
+        # Evitamos división por 0
+        precision_score = float(tp / (tp + fp)) if tp + fp > 0 else 0.0
+
+        # Recall = TP / (TP + FN)
+        recall_score = float(tp / (tp + fn)) if tp + fn > 0 else 0.0
+
+        # F1 combina ambas
+        denominator = precision_score + recall_score
+
+        return (
+            2 * precision_score * recall_score / denominator
+            if denominator > 0
+            else 0.0
+        )
+
+    # MICRO (global)
+
+    if average == "micro":
+        # En clasificación multiclase:
+        # micro-F1 = accuracy
+        return accuracy(vector_true, vector_pred)
+
+   
+    # MULTICLASE (macro, weighted, None)
+
+    # Obtenemos TP, FP y FN 
+    components = _compute_metric_components(
+        vector_true, vector_pred, classes, ["TP", "FP", "FN"]
+    )
+
+    # Separar cada componente
+    tp, fp, fn = components[:, 0], components[:, 1], components[:, 2]
+
+    # Calculamos precision y recall por clase
+    with np.errstate(divide="ignore", invalid="ignore"):
+
+        # Precision por clase
+        per_class_precision = np.nan_to_num(tp / (tp + fp))
+
+        # Recall por clase
+        per_class_recall = np.nan_to_num(tp / (tp + fn))
+
+        # F1 por clase
+        per_class_f1 = np.nan_to_num(
+            2
+            * per_class_precision
+            * per_class_recall
+            / (per_class_precision + per_class_recall)
+        )
+
+   
+    # MACRO
+   
+    if average == "macro":
+        # Promedio simple entre clases
+        return float(np.mean(per_class_f1))
+
+ 
+    # WEIGHTED
+  
+    if average == "weighted":
+
+        # Cantidad de ejemplos por clase (soporte)
+        supports = np.array([np.sum(vector_true == c) for c in classes])
+
+        # Total de ejemplos
+        total_support = np.sum(supports)
+
+        # Pesos relativos de cada clase
+        weights = supports / total_support
+
+        # Promedio ponderado
+        return float(np.sum(per_class_f1 * weights))
+
+    # NONE → devuelve por clase
+
+    return per_class_f1
