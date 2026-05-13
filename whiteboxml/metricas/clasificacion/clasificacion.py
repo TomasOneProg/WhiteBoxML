@@ -175,6 +175,8 @@ def recall(
     with np.errstate(divide="ignore", invalid="ignore"):
         per_class_recall = np.nan_to_num(tp / (tp + fn))
     return per_class_recall
+
+
 def f1_score(
     y_true: ArrayLike,
     y_pred: ArrayLike,
@@ -229,9 +231,7 @@ def f1_score(
         denominator = precision_score + recall_score
 
         return (
-            2 * precision_score * recall_score / denominator
-            if denominator > 0
-            else 0.0
+            2 * precision_score * recall_score / denominator if denominator > 0 else 0.0
         )
 
     # MICRO (global)
@@ -241,10 +241,9 @@ def f1_score(
         # micro-F1 = accuracy
         return accuracy(vector_true, vector_pred)
 
-   
     # MULTICLASE (macro, weighted, None)
 
-    # Obtenemos TP, FP y FN 
+    # Obtenemos TP, FP y FN
     components = _compute_metric_components(
         vector_true, vector_pred, classes, ["TP", "FP", "FN"]
     )
@@ -269,16 +268,14 @@ def f1_score(
             / (per_class_precision + per_class_recall)
         )
 
-   
     # MACRO
-   
+
     if average == "macro":
         # Promedio simple entre clases
         return float(np.mean(per_class_f1))
 
- 
     # WEIGHTED
-  
+
     if average == "weighted":
 
         # Cantidad de ejemplos por clase (soporte)

@@ -140,6 +140,7 @@ def test_recall_macro_and_weighted_and_none():
     assert arr.shape == (3,)
     assert np.allclose(arr, per_class)
 
+
 def test_f1_binary_basic():
     """
     Test F1 score básico
@@ -177,9 +178,7 @@ def test_f1_micro_equals_accuracy():
     y_true = [0, 1, 2, 2]
     y_pred = [0, 2, 2, 1]
     expected = float(np.mean(np.array(y_true) == np.array(y_pred)))
-    assert metricas.f1_score(y_true, y_pred, average="micro") == pytest.approx(
-        expected
-    )
+    assert metricas.f1_score(y_true, y_pred, average="micro") == pytest.approx(expected)
 
 
 def test_f1_macro_and_weighted_and_none():
@@ -202,6 +201,7 @@ def test_f1_macro_and_weighted_and_none():
     assert isinstance(arr, np.ndarray)
     assert arr.shape == (3,)
     assert np.allclose(arr, per_class)
+
 
 def test_mean_squared_error():
     """
