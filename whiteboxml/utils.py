@@ -54,6 +54,9 @@ def _validacion_inputs(
             f"mientras que el segundo tiene {len(array2)}."
         )
 
+    if array1.size == 0 or array2.size == 0:
+        raise ValueError("y_true y/o y_pred no pueden estar vacíos")
+
     return array1, array2
 
 

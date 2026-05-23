@@ -103,7 +103,7 @@ def test_recall_micro_equals_accuracy_default():
     y_true = [0, 1, 1, 2]
     y_pred = [0, 1, 0, 2]
     expected = float(np.mean(np.array(y_true) == np.array(y_pred)))
-    assert metricas.recall(y_true, y_pred) == pytest.approx(expected)
+    assert metricas.recall(y_true, y_pred, average="micro") == pytest.approx(expected)
 
 
 def test_recall_binary_basic():
@@ -136,6 +136,68 @@ def test_recall_macro_and_weighted_and_none():
     )
     assert metricas.recall(y_true, y_pred, average="weighted") == pytest.approx(0.5)
     arr = metricas.recall(y_true, y_pred, average=None)
+    assert isinstance(arr, np.ndarray)
+    assert arr.shape == (3,)
+    assert np.allclose(arr, per_class)
+
+
+def test_f1_binary_basic():
+    """
+    Test F1 score básico
+    :authors: Cecilia Gómez
+    :date: 24/04/2026
+    """
+
+    y_true = [1, 0, 1, 1]
+    y_pred = [1, 0, 0, 1]
+    expected = 0.8
+    assert metricas.f1_score(
+        y_true, y_pred, average="binary", pos_label=1
+    ) == pytest.approx(expected)
+
+
+def test_f1_binary_no_pred_positives():
+    """
+    Test F1 sin positivos predichos
+    :authors: Cecilia Gómez
+    :date: 24/04/2026
+    """
+
+    y_true = [1, 1, 0]
+    y_pred = [0, 0, 0]
+    assert metricas.f1_score(y_true, y_pred, average="binary", pos_label=1) == 0.0
+
+
+def test_f1_micro_equals_accuracy():
+    """
+    Test F1 micro vs accuracy
+    :authors: Cecilia Gómez
+    :date: 24/04/2026
+    """
+
+    y_true = [0, 1, 2, 2]
+    y_pred = [0, 2, 2, 1]
+    expected = float(np.mean(np.array(y_true) == np.array(y_pred)))
+    assert metricas.f1_score(y_true, y_pred, average="micro") == pytest.approx(expected)
+
+
+def test_f1_macro_and_weighted_and_none():
+    """
+    Test F1 con distintos average
+    :authors: Cecilia Gómez
+    :date: 24/04/2026
+    """
+
+    y_true = [0, 1, 2, 0]
+    y_pred = [0, 2, 1, 0]
+    per_class = np.array([1.0, 0.0, 0.0])
+
+    assert metricas.f1_score(y_true, y_pred, average="macro") == pytest.approx(
+        np.mean(per_class)
+    )
+    assert metricas.f1_score(y_true, y_pred, average="weighted") == pytest.approx(0.5)
+
+    arr = metricas.f1_score(y_true, y_pred, average=None)
     assert isinstance(arr, np.ndarray)
     assert arr.shape == (3,)
     assert np.allclose(arr, per_class)
