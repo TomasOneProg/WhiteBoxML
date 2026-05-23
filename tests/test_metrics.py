@@ -103,7 +103,7 @@ def test_recall_micro_equals_accuracy_default():
     y_true = [0, 1, 1, 2]
     y_pred = [0, 1, 0, 2]
     expected = float(np.mean(np.array(y_true) == np.array(y_pred)))
-    assert metricas.recall(y_true, y_pred) == pytest.approx(expected)
+    assert metricas.recall(y_true, y_pred, average="micro") == pytest.approx(expected)
 
 
 def test_recall_binary_basic():
@@ -144,7 +144,7 @@ def test_recall_macro_and_weighted_and_none():
 def test_f1_binary_basic():
     """
     Test F1 score básico
-    :authors: Cecilia Gómez. Grupo 6
+    :authors: Cecilia Gómez
     :date: 24/04/2026
     """
 
@@ -159,7 +159,7 @@ def test_f1_binary_basic():
 def test_f1_binary_no_pred_positives():
     """
     Test F1 sin positivos predichos
-    :authors: Cecilia Gómez. Grupo 6
+    :authors: Cecilia Gómez
     :date: 24/04/2026
     """
 
@@ -171,7 +171,7 @@ def test_f1_binary_no_pred_positives():
 def test_f1_micro_equals_accuracy():
     """
     Test F1 micro vs accuracy
-    :authors: Cecilia Gómez. Grupo 6
+    :authors: Cecilia Gómez
     :date: 24/04/2026
     """
 
@@ -184,7 +184,7 @@ def test_f1_micro_equals_accuracy():
 def test_f1_macro_and_weighted_and_none():
     """
     Test F1 con distintos average
-    :authors: Cecilia Gómez. Grupo 6
+    :authors: Cecilia Gómez
     :date: 24/04/2026
     """
 

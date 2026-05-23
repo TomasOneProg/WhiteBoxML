@@ -1,5 +1,4 @@
 # Contributors
 
+- Cecilia Gómez
 - Tomás Macrade
-
-- Cecilia Gómez - Grupo 6

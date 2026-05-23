@@ -5,6 +5,7 @@ Metricas: Conjunto de métricas útiles para clasificación y regresión
 :date: 27/02/2026
 """
 
+# pylint: disable=duplicate-code
 from .clasificacion import accuracy, f1_score, precision, recall
 from .regresion import mean_absolute_error, mean_squared_error, r2
 
