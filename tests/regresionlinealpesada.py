@@ -28,7 +28,7 @@ class RegresionLinealPesada:
         :param X: Matriz de datos de entrada.
         :param x_objetivo: Punto objetivo para el cual calcular los pesos.
         :return: Vector de pesos.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
 
@@ -58,7 +58,7 @@ class RegresionLinealPesada:
         :param tol: Tolerancia para la convergencia.
         :param lr: Tasa de aprendizaje para el descenso de gradiente.
         :return: Vector de parámetros ajustados.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         w = self._calcular_pesos(X, x_objetivo)
@@ -73,7 +73,7 @@ class RegresionLinealPesada:
         Agrega una columna de unos a la matriz de datos para el término de intercepto.
         :param X: Matriz de datos de entrada.
         :return: Matriz de datos con columna de unos agregada.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         X = np.asarray(X)
@@ -95,7 +95,7 @@ class RegresionLinealPesada:
         :param y: Vector de etiquetas.
         :param x_objetivo: Punto objetivo para el cual realizar la predicción.
         :return: Predicción para el punto objetivo.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         X = self._agregar_intercepto_X(X)
