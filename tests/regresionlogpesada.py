@@ -17,7 +17,7 @@ class RegresionLogPesada :
         :param kernel: Tipo de kernel a utilizar ("gaussiano" o "tricubo").
         :param d: Parámetro de distancia para el kernel tricubo (requerido si
                         se selecciona el kernel tricubo).
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
 
@@ -30,7 +30,7 @@ class RegresionLogPesada :
         :param X: Matriz de datos de entrada.
         :param x_objetivo: Punto objetivo para el cual calcular los pesos.
         :return: Vector de pesos.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         dist = np.linalg.norm(X - x_objetivo, axis=1)
@@ -54,7 +54,7 @@ class RegresionLogPesada :
         Agrega una columna de unos a la matriz de datos para el término de intercepto.
         :param X: Matriz de datos de entrada.
         :return: Matriz de datos con columna de unos agregada.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         X = np.asarray(X)
@@ -67,7 +67,7 @@ class RegresionLogPesada :
         Agrega un término de intercepto a un punto objetivo.
         :param x: Punto objetivo (vector).
         :return: Punto objetivo con término de intercepto agregado.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         x = np.asarray(x).ravel()
@@ -83,7 +83,7 @@ class RegresionLogPesada :
         :param tol: Tolerancia para la convergencia.
         :param lr: Tasa de aprendizaje para el descenso de gradiente.
         :return: Vector de parámetros ajustados.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         w = self._calcular_pesos(X, x_objetivo)
@@ -110,7 +110,7 @@ class RegresionLogPesada :
         :param y: Vector de etiquetas.
         :param x_objetivo: Punto objetivo para el cual predecir.
         :return: Probabilidad de pertenecer a la clase positiva.
-        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colossimo | Tomas Macrade
+        :authors: Brian Fernandez | Tomas Borstner | Brenda Ordoñez | Joaquin Pereyra | Lucas Colosimo | Tomas Macrade
         :date: 13/06/2026
         """
         X = self._agregar_intercepto_X(X)
